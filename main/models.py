@@ -21,7 +21,7 @@ class Tweet(models.Model):
     text = models.TextField(max_length=500)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     date = models.DateTimeField(default=timezone.now, blank=True)
-    photo = models.ImageField(upload_to='profile_pic', blank=True, null=True)
+    photo = models.ImageField(upload_to='tweet_pic', blank=True, null=True)
     likedBy = models.ManyToManyField(Profile, related_name='likedTweet', blank=True)
 
     def __str__(self):
