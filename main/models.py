@@ -11,7 +11,6 @@ class Profile(models.Model):
     password = models.CharField(max_length=30)
     photo = models.ImageField(upload_to='profile_pic', default='defaultProfileImage.jpg', blank=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
-    follow = models.ManyToManyField("self", blank=True)
 
     def __str__(self):
         return "nome: " + self.name + " email: " + self.email
@@ -26,3 +25,8 @@ class Tweet(models.Model):
 
     def __str__(self):
         return str(self.date) + " - " + self.user.name + " - " + self.text
+
+
+class UserFollowing(models.Model):
+    user_id = models.ForeignKey(Profile, related_name="following", on_delete=models.CASCADE)
+    following_user_id = models.ForeignKey(Profile, related_name="followers", on_delete=models.CASCADE)

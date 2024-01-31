@@ -6,3 +6,4 @@ from main.models import *
 
 admin.site.register(Profile)
 admin.site.register(Tweet)
+admin.site.register(UserFollowing)
