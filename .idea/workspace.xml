@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="fixed image upload dir in models">
-      <change afterPath="$PROJECT_DIR$/main/migrations/0003_alter_tweet_photo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/profile_pic/team.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/tweet_pic/team_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="added script that populate the db">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/migrations/0004_remove_profile_follow_userfollowing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/create_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/delete_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/detail_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/list_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/update_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/defaultTweet.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/process-vs-thread3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/profile_pic/team.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/tweet_pic/team_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/initDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/twitter_clone/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -45,28 +54,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PythonContentEntriesConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media" />
+      <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media\profile_pic" />
+      <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media\tweet_pic" />
+      <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media\default" />
       <recent name="C:\Users\feder\PycharmProjects\twitter_clone\main" />
     </key>
   </component>
@@ -113,7 +126,8 @@
       <updated>1706549094732</updated>
       <workItem from="1706549094915" duration="911000" />
       <workItem from="1706626501888" duration="5130000" />
-      <workItem from="1706714977689" duration="2491000" />
+      <workItem from="1706714977689" duration="4112000" />
+      <workItem from="1706801375465" duration="3736000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -139,17 +153,37 @@
       <option name="project" value="LOCAL" />
       <updated>1706631421418</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added script that populate the db">
+      <option name="closed" value="true" />
+      <created>1706717554519</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706717554520</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="created main app and models" />
     <MESSAGE value="fixed image upload dir in models" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed image upload dir in models" />
+    <MESSAGE value="added script that populate the db" />
+    <option name="LAST_COMMIT_MESSAGE" value="added script that populate the db" />
   </component>
 </project>

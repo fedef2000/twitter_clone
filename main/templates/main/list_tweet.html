@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} Lista tweet {% endblock %}
+{% block content %}
+    <h2>Lista di tutti i tweet</h2>
+    <ul>
+    {% for tweet in object_list %}
+        <li>
+            Autore: {{ tweet.user.name }}
+            <br>
+            Testo: {{ tweet.text }}
+            <br>
+            Data: {{ tweet.date.astimezone }}
+            <br>
+            {% if tweet.photo %}
+            <img src="{{ tweet.photo }}" height=100>
+            <br>
+            {% endif %}
+            Likes: {{ tweet.likedBy.count }}
+            <br>
+            <br>
+        </li>
+    {% endfor %}
+    </ul>
+
+ {% endblock %}
