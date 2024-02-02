@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Cerca tweet {% endblock %}
+{% block content %}
+
+    {% if object_list.count == 0 %}
+        Nessun tweet trovato!
+    {% else %}
+        <ul>
+
+        {% for tweet in object_list %}
+            <li>
+        	<a href="{% url 'main:detail_tweet' tweet.id %}">
+        	    Autore: {{ tweet.user.name }}
+                <br>
+                Testo: {{ tweet.text }}
+                <br>
+                Data: {{ tweet.date.astimezone }}
+                <br>
+                {% if tweet.photo %}
+                    <img src="{{ tweet.photo }}" height=100>
+                    <br>
+                {% endif %}
+                Likes: {{ tweet.likedBy.count }}
+                <br>
+            </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {%  endif %}
+ {% endblock %}

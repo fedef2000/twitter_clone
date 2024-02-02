@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Search Results  {% endblock %}
+
+{% block content %}
+
+{% if object_list %}
+    {% if where == "Tweets" %}
+        <ul>
+        {% for object in object_list %}
+            <li>
+            Autore: {{ object.user.name }}
+            <br>
+            Testo: {{ object.text }}
+            <br>
+            Data: {{ object.date.astimezone }}
+            <br>
+            {% if object.photo %}
+                <img src="{{ object.photo }}" height=100>
+                <br>
+            {% endif %}
+            Likes: {{ object.likedBy.count }}
+            <br>
+            </li>
+        {% endfor %}
+        </ul>
+    {%  else %}
+    <ul>
+        {% for object in object_list %}
+            <li>
+            <img src="{{ object.photo }}" height=100>
+            <br>
+            Nome: {{ object.name }}
+            <br>
+            Email: {{ object.email }}
+            <br>
+            {% if object.bio %}
+                Bio: {{ object.bio }}
+            {% endif %}
+            <br>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% else %}
+    <p>No results.</p>
+{% endif %}
+
+{% endblock %}

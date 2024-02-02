@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Cerca profilo {% endblock %}
+{% block content %}
+
+    {% if object_list.count == 0 %}
+        Non c'è nessun utente con questo nome
+    {% else %}
+        <ul>
+
+        {% for profile in object_list %}
+            <li>
+        	<a href="{% url 'main:detail_profile' profile.id %}">
+                {{ profile.name }}
+            <br>
+                <img src="{{ profile.photo }}">
+            <br>
+                {% if profile.bio %}
+                    {{ profile.bio }}
+                {% endif %}
+            </a>
+            </li>
+
+        {% endfor %}
+        </ul>
+
+    {%  endif %}
+
+ {% endblock %}

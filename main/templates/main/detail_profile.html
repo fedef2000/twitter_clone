@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Profilo di {{ object }} {% endblock %}
+{% block content %}
+    <img src="{{ object.photo }}" height=100>
+    <br>
+    Nome: {{ object.name }}
+    <br>
+    Email: {{ object.email }}
+    <br>
+    {% if object.bio %}
+        Bio: {{ object.bio }}
+    {% endif %}
+    <br>
+        <br>
+    <br>
+ {% endblock %}
