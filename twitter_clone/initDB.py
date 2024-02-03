@@ -1,10 +1,9 @@
-from django.core.files import File
-
 from main.models import *
-from django.core.files.images import ImageFile
+from django.contrib.auth.models import User
 
 
 def erase_db():
+    User.objects.all().delete()
     Profile.objects.all().delete()
     Tweet.objects.all().delete()
     UserFollowing.objects.all().delete()
@@ -12,32 +11,33 @@ def erase_db():
 
 
 def init_db():
-    if len(Profile.objects.all()) != 0:
-        return
-    if len(Tweet.objects.all()) != 0:
-        return
 
     profiles = {
-        "name": ["Alessandro Manzoni", "George Orwell", "Omero", "Alessandro Baricco", "Virgilio"],
+        "name": ["fede", "George Orwell", "Omero", "Alessandro Baricco", "Virgilio"],
         "email": ["manzoni@gmail.com", "orwell@gmail.com", "omero@gmail.com", "baricco@gmail.com",
                   "virgilio@gmail.com"],
-        "password": ["12345678", "12345678", "12345678", "12345678", "12345678"],
+        "password": ["fede", "12345678", "12345678", "12345678", "12345678"],
     }
 
     # add new profiles
     for i in range(5):
-        p = Profile()
-        for k in profiles:
-            if k == "name":
-                p.name = profiles[k][i]
-            if k == "email":
-                p.email = profiles[k][i]
-            if k == "password":
-                p.password = profiles[k][i]
         try:
-            p.save()
+            if profiles["name"][i] == "fede":
+                user = User.objects.create_superuser(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
+            else:
+                user = User.objects.create_user(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
         except:
-            print("errore durante il salvataggio")
+            print("Errore in Username: " + profiles["name"][i])
+        else:
+            p = Profile()
+            p.user = user
+            for k in profiles:
+                if k == "name":
+                    p.name = profiles[k][i]
+            try:
+                p.save()
+            except:
+                print("errore durante il salvataggio")
 
     # make some user follow some other
     for i in range(4):
