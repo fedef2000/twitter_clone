@@ -1,16 +1,24 @@
 {% extends "base.html" %}
-{% block title %} Profilo di {{ object }} {% endblock %}
+{% block title %} Profilo di {{ profile }} {% endblock %}
 {% block content %}
-    <img src="{{ object.photo }}" height=100>
+    <img src="{{ profile.photo }}" height=100>
     <br>
-    Nome: {{ object.name }}
+    Nome: {{ profile.name }}
     <br>
-    Email: {{ object.email }}
+    Email: {{ profile.user.email }}
     <br>
-    {% if object.bio %}
-        Bio: {{ object.bio }}
+    {% if profile.bio %}
+        Bio: {{ profile.bio }}
     {% endif %}
     <br>
-        <br>
     <br>
+    <h4>Tweets di {{ profile.name }}</h4>
+    {% if tweets.count > 0 %}
+    {% for tweet in tweets %}
+    	{% include 'tweet.html' %}
+    {% endfor %}
+    {% else %}
+        L'utente non ha ancora pubblicato tweet
+    {% endif %}
+
  {% endblock %}

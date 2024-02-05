@@ -12,7 +12,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return "user: " + self.user.__str__() + ", name: " + self.name
+        return "user: " + self.user.__str__() + ", name: " + self.name + ", tweets: " + str(self.posts)
 
 
 class Tweet(models.Model):

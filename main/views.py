@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
@@ -20,23 +22,46 @@ class DetailTweetView(DetailView):
     model = Tweet
     template_name = "main/detail_tweet.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tweet'] = context["object"]
+        return context
+
 
 class CreateTweetView(LoginRequiredMixin, CreateView):
     model = Tweet
     template_name = "main/create_tweet.html"
-    fields = "__all__"
-    # fields = ["text", "photo"]
+    fields = ["text", "photo"]
     success_url = reverse_lazy("main:tweet_list")
+
+    def form_valid(self, form):
+        tweet = form.save(commit=False)
+        tweet.author = Profile.objects.get(user=User.objects.get(username=self.request.user))
+        print("photo:")
+        print(tweet.photo)
+        tweet.save()
+        return HttpResponseRedirect(self.success_url)
 
 
 class UpdateTweetView(LoginRequiredMixin, UpdateView):
     model = Tweet
     template_name = "main/update_tweet.html"
-    fields = ["text"]
+    fields = ["text", "photo"]
 
     def get_success_url(self):
         pk = self.get_context_data()["object"].pk
         return reverse("main:detail_tweet", kwargs={'pk': pk})
+
+    def get_object(self, *args, **kwargs):
+        tweet = super(UpdateTweetView, self).get_object(*args, **kwargs)
+        profile = Profile.objects.get(user=self.request.user)
+        if not tweet.author == profile:
+            raise Http404
+        return tweet
+
+    def form_valid(self, form):
+        form.instance.owner_user = self.request.user
+        return super(UpdateTweetView, self).form_valid(form)
 
 
 class DeleteTweetView(LoginRequiredMixin, DeleteView):
@@ -57,8 +82,18 @@ def search_profile_by_name(request, name):
 
 
 class ProfileDetailView(DetailView):
-    model = Profile
+    model = User
     template_name = "main/detail_profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = context["object"].pk
+        user = User.objects.get(id=pk)
+        profile = Profile.objects.get(user=user)
+        tweets = Tweet.objects.filter(author=profile)
+        context["profile"] = profile
+        context['tweets'] = tweets
+        return context
 
 
 def search(request):

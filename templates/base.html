@@ -64,7 +64,7 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     {% block navbar %}
-    <a class="navbar-brand" href="{% url 'main:tweet_list' %}">Biblio3</a>
+    <a class="navbar-brand" href="{% url 'main:tweet_list' %}">Twitter</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -82,7 +82,20 @@
           {% endif %}
           
       </ul>
-    </div> 
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+          <form class="btn" method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="btn btn-info" type="submit">logout</button>
+          </form>
+          <a class="btn btn-info" href="{% url 'main:detail_profile' pk=user.id %}" role="button">Profilo</a>
+      {% else %}
+      <a class="btn btn-info" href="{% url 'register' %}" role="button">Registrati</a>
+      <a class="btn btn-info" href="{% url 'login' %}" role="button">Login</a>
+      {% endif %}
+
+    </div>
     {% endblock %} 
   </nav>
 
@@ -107,18 +120,8 @@
   
   
   <div class="jumbotron text-center" style="margin-bottom:0">
-    {% block footer %} 
-
-      {% if user.is_authenticated %}
-          <form class="btn btn-info" method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit">logout</button>
-          </form>
-      {% else %}
-      <a class="btn btn-info" href="{% url 'register' %}" role="button">Registrati</a>
-      <a class="btn btn-info" href="{% url 'login' %}" role="button">Login</a>
-      {% endif %}
-
+    {% block footer %}
+      
       <a class="btn btn-warning" href="/admin/" role="button">Admin Login</a>
     
     {%  endblock %}

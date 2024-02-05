@@ -1,16 +1,5 @@
 {% extends "base.html" %}
 {% block title %} Dettagli tweet {% endblock %}
 {% block content %} 
-    Autore: {{ object.author.name }}
-    <br>
-    Testo: {{ object.text }}
-    <br>
-    Data: {{ object.date.astimezone }}
-    <br>
-    {% if object.photo %}
-        <img src="{{ object.photo }}" height=100>
-        <br>
-    {% endif %}
-    Likes: {{ object.likedBy.count }}
-    <br>
+    {% include "tweet.html" %}
  {% endblock %}

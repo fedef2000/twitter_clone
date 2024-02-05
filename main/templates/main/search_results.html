@@ -7,20 +7,9 @@
 {% if object_list %}
     {% if where == "Tweets" %}
         <ul>
-        {% for object in object_list %}
+        {% for tweet in object_list %}
             <li>
-            Autore: {{ object.author.name }}
-            <br>
-            Testo: {{ object.text }}
-            <br>
-            Data: {{ object.date.astimezone }}
-            <br>
-            {% if object.photo %}
-                <img src="{{ object.photo }}" height=100>
-                <br>
-            {% endif %}
-            Likes: {{ object.likedBy.count }}
-            <br>
+                {% include 'tweet.html' %}
             </li>
         {% endfor %}
         </ul>
