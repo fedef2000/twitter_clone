@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from main.forms import SearchForm
 from main.models import Tweet, Profile
 
@@ -20,7 +21,7 @@ class DetailTweetView(DetailView):
     template_name = "main/detail_tweet.html"
 
 
-class CreateTweetView(CreateView):
+class CreateTweetView(LoginRequiredMixin, CreateView):
     model = Tweet
     template_name = "main/create_tweet.html"
     fields = "__all__"
@@ -28,7 +29,7 @@ class CreateTweetView(CreateView):
     success_url = reverse_lazy("main:tweet_list")
 
 
-class UpdateTweetView(UpdateView):
+class UpdateTweetView(LoginRequiredMixin, UpdateView):
     model = Tweet
     template_name = "main/update_tweet.html"
     fields = ["text"]
@@ -38,7 +39,7 @@ class UpdateTweetView(UpdateView):
         return reverse("main:detail_tweet", kwargs={'pk': pk})
 
 
-class DeleteTweetView(DeleteView):
+class DeleteTweetView(LoginRequiredMixin, DeleteView):
     model = Tweet
     template_name = "main/delete_tweet.html"
     success_url = reverse_lazy("main:tweet_list")

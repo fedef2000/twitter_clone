@@ -1,3 +1,5 @@
+import random
+
 from main.models import *
 from django.contrib.auth.models import User
 
@@ -50,11 +52,13 @@ def init_db():
     }
 
     # create some tweets
-    for i in range(5):
+    for i in range(20):
         t = Tweet()
-        t.text = tweets["text"][i]
-        user = Profile.objects.get(name=profiles["name"][i])
-        t.user = user
+        n = random.randint(0, len(tweets["text"]) - 1)
+        t.text = tweets["text"][n]
+        x = random.randint(0, len(profiles["name"]) - 1)
+        author = Profile.objects.get(name=profiles["name"][x])
+        t.author = author
         if i == 3:
             t.photo = "/media/defaultTweet.jpg"
         try:

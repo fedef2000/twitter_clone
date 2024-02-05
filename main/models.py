@@ -17,13 +17,13 @@ class Profile(models.Model):
 
 class Tweet(models.Model):
     text = models.TextField(max_length=500)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     date = models.DateTimeField(default=timezone.now, blank=True)
     photo = models.ImageField(upload_to='', blank=True, null=True)
     likedBy = models.ManyToManyField(Profile, related_name='likedTweet', blank=True)
 
     def __str__(self):
-        return "id: " + str(self.id) + ", data:  " + str(self.date) + " - " + self.user.name + " - " + self.text
+        return "id: " + str(self.id) + ", data:  " + str(self.date) + " - " + self.author.name + " - " + self.text
 
 
 class UserFollowing(models.Model):

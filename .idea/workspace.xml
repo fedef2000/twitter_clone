@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="added bootstrap, login logout and register">
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="refactor Profile model: added User fk">
+      <change afterPath="$PROJECT_DIR$/main/migrations/0005_remove_profile_email_remove_profile_password_and_more.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/twitter_clone/initDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +118,8 @@
       <workItem from="1706714977689" duration="4112000" />
       <workItem from="1706801375465" duration="7324000" />
       <workItem from="1706886942166" duration="4962000" />
-      <workItem from="1706949158113" duration="2288000" />
+      <workItem from="1706949158113" duration="4363000" />
+      <workItem from="1707147793986" duration="336000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -165,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706891734081</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="refactor Profile model: added User fk">
+      <option name="closed" value="true" />
+      <created>1706951776932</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706951776932</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +202,7 @@
     <MESSAGE value="added script that populate the db" />
     <MESSAGE value="added CRUD+L tweet views, image has to be fixed" />
     <MESSAGE value="added bootstrap, login logout and register" />
-    <option name="LAST_COMMIT_MESSAGE" value="added bootstrap, login logout and register" />
+    <MESSAGE value="refactor Profile model: added User fk" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor Profile model: added User fk" />
   </component>
 </project>

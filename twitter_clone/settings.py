@@ -128,3 +128,4 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGOUT_REDIRECT_URL = "/app/home"
 LOGIN_REDIRECT_URL = "/app/home?login=ok"
+LOGIN_URL = "/login?auth=notok"
