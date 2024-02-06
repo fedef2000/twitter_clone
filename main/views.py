@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from main.forms import SearchForm
 from main.models import Tweet, Profile
@@ -35,16 +34,16 @@ class DetailTweetView(DetailView):
     context_object_name = 'tweet'
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-
-        likes_connected = get_object_or_404(Tweet, id=self.kwargs['pk'])
-        profile = Profile.objects.get(user=self.request.user)
-        liked = False
-        if likes_connected.likedBy.filter(id=profile.id).exists():
-            liked = True
-        data['number_of_likes'] = likes_connected.number_of_likes()
-        data['post_is_liked'] = liked
-        return data
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            likes_connected = get_object_or_404(Tweet, id=self.kwargs['pk'])
+            profile = Profile.objects.get(user=self.request.user)
+            liked = False
+            if likes_connected.likedBy.filter(id=profile.id).exists():
+                liked = True
+            context['number_of_likes'] = likes_connected.number_of_likes()
+            context['post_is_liked'] = liked
+        return context
 
 
 class CreateTweetView(LoginRequiredMixin, CreateView):
@@ -56,8 +55,6 @@ class CreateTweetView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         tweet = form.save(commit=False)
         tweet.author = Profile.objects.get(user=User.objects.get(username=self.request.user))
-        print("photo:")
-        print(tweet.photo)
         tweet.save()
         return HttpResponseRedirect(self.success_url)
 
@@ -105,17 +102,6 @@ def tweetLike(request, pk, page):
         return HttpResponseRedirect(reverse('main:detail_tweet', args=[str(pk)]))
 
 
-def search_tweet(request, text):
-    qs = Tweet.objects.filter(text__icontains=text).order_by("-date")
-    return render(request, template_name="main/search_tweet.html", context={"object_list": qs})
-
-
-# Profile views
-def search_profile_by_name(request, name):
-    qs = Profile.objects.filter(name__icontains=name)
-    return render(request, template_name="main/search_profile.html", context={"object_list": qs})
-
-
 class ProfileDetailView(DetailView):
     model = User
     template_name = "main/detail_profile.html"
@@ -129,16 +115,14 @@ class ProfileDetailView(DetailView):
             for tweet in tweets:
                 user = User.objects.get(id=self.request.user.id)
                 p = Profile.objects.get(user=user)
-                likes_connected = get_object_or_404(Tweet, id=tweet.id)
                 liked = False
-                if likes_connected.likedBy.filter(id=p.id).exists():
+                if tweet.likedBy.filter(id=p.id).exists():
                     liked = True
-                tweet.number_of_likes = likes_connected.number_of_likes()
+                tweet.number_of_likes = tweet.number_of_likes()
                 tweet.post_is_liked = liked
         context["user"] = self.request.user # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
-        print(self.request.user.is_authenticated)
         return context
 
 

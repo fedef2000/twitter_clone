@@ -60,7 +60,7 @@ def init_db():
         author = Profile.objects.get(name=profiles["name"][x])
         t.author = author
         if i == 3:
-            t.photo = "/media/defaultTweet.jpg"
+            t.photo = "defaultTweet.jpg"
         try:
             t.save()
         except:

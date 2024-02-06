@@ -8,7 +8,7 @@ from django.utils import timezone
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, blank=True, null=True)
     name = models.CharField(max_length=30)
-    photo = models.ImageField(upload_to='profile_pic', default='/defaultProfileImage.jpg', blank=True)
+    photo = models.ImageField(upload_to='profile_photo', default='defaultProfileImage.jpg', blank=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
@@ -19,7 +19,7 @@ class Tweet(models.Model):
     text = models.TextField(max_length=500)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='tweets')
     date = models.DateTimeField(default=timezone.now, blank=True)
-    photo = models.ImageField(upload_to='', blank=True, null=True)
+    photo = models.ImageField(upload_to='tweet_photo', blank=True, null=True)
     likedBy = models.ManyToManyField(Profile, related_name='likedTweet', blank=True)
 
     def number_of_likes(self):
