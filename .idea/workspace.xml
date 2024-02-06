@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="refactor Create Tweet view, tweet template">
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="fixed registration bug (not creating profile)">
+      <change afterPath="$PROJECT_DIR$/main/migrations/0007_alter_tweet_author.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/list_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/list_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitter_clone/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tweet.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +124,7 @@
       <workItem from="1706949158113" duration="4363000" />
       <workItem from="1707147793986" duration="8055000" />
       <workItem from="1707165337868" duration="2367000" />
-      <workItem from="1707232676093" duration="850000" />
+      <workItem from="1707232676093" duration="6174000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -193,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707167564214</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fixed registration bug (not creating profile)">
+      <option name="closed" value="true" />
+      <created>1707233656827</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1707233656827</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,6 +234,7 @@
     <MESSAGE value="refactor Profile model: added User fk" />
     <MESSAGE value="refactor Profile model: filed user was renamed author. initDB add 20 tweets" />
     <MESSAGE value="refactor Create Tweet view, tweet template" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor Create Tweet view, tweet template" />
+    <MESSAGE value="fixed registration bug (not creating profile)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed registration bug (not creating profile)" />
   </component>
 </project>

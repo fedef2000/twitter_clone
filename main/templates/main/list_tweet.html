@@ -6,9 +6,9 @@
     <h2>Ecco gli ultimi 20 tweet</h2>
     <br>
     <ul>
-    {% for tweet in object_list %}
+    {% for tweet in tweets %}
         <li>
-            {% include "tweet.html" %}
+            {% include "tweet.html" with number_of_likes=number_of_likes post_is_liked=post_is_liked page='Home' pk=0%}
         </li>
     {% endfor %}
     </ul>

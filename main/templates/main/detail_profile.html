@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block title %} Profilo di {{ profile }} {% endblock %}
+
 {% block content %}
     <img src="{{ profile.photo }}" height=100>
     <br>
@@ -15,7 +17,7 @@
     <h4>Tweets di {{ profile.name }}</h4>
     {% if tweets.count > 0 %}
     {% for tweet in tweets %}
-    	{% include 'tweet.html' %}
+    	{% include 'tweet.html' with number_of_likes=tweet.number_of_likes post_is_liked=tweet.post_is_liked page='Profile' pk=profile.user.id%}
     {% endfor %}
     {% else %}
         L'utente non ha ancora pubblicato tweet

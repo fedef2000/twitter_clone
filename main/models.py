@@ -12,15 +12,18 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return "user: " + self.user.__str__() + ", name: " + self.name + ", tweets: " + str(self.posts)
+        return "user: " + self.user.__str__() + ", name: " + self.name + ", tweets: " + str(self.tweets)
 
 
 class Tweet(models.Model):
     text = models.TextField(max_length=500)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='tweets')
     date = models.DateTimeField(default=timezone.now, blank=True)
     photo = models.ImageField(upload_to='', blank=True, null=True)
     likedBy = models.ManyToManyField(Profile, related_name='likedTweet', blank=True)
+
+    def number_of_likes(self):
+        return self.likedBy.count()
 
     def __str__(self):
         return "id: " + str(self.id) + ", data:  " + str(self.date) + " - " + self.author.name + " - " + self.text

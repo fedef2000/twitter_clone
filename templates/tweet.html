@@ -1,18 +1,33 @@
 <div class="panel-body">
-    <a href="{% url "main:detail_profile" pk=tweet.author.id %}">
+    <a href="{% url "main:detail_profile" pk=tweet.author.user.id %}">
         <img class="img-circle img-bordered-primary" src="{{ tweet.author.photo }}" alt="" width="65px" height="65px">
     </a>
     <h5 class="semibold ellipsis nm"><a href="{% url "main:detail_profile" pk=tweet.author.user.id %}">{{ tweet.author.name }}</a></h5>
     <small class="text-muted">{{ tweet.date.astimezone }}</small>
 </div>
 
+<a href="{% url "main:detail_tweet" pk=tweet.id %}" >
+    {{ tweet.text }}
+</a>
 
-{{ tweet.text }}
 <br>
 {% if tweet.photo %}
     <img src=" {{ tweet.photo }}" height=100>
 <br>
 {% endif %}
-Likes: {{ tweet.likedBy.count }}
+<!-- LIKES -->
+{% if user.is_authenticated %}
+  <form action="{% url 'main:tweet_like' pk=pk page=page %}" method="POST">
+    {% csrf_token %}
+    {% if post_is_liked %}
+    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
+    {% else %}
+    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>
+    {% endif %}
+  </form>
+{% else %}
+  <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to like this article!</a><br>
+{% endif %}
+<strong class="text-secondary">{{ tweet.likedBy.count }} Like{{ tweet.likedBy.count|pluralize }}</strong>
 <br>
 <br>
