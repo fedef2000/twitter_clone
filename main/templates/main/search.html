@@ -2,9 +2,10 @@
 {% block title %} Search Page Form {% endblock %}
 {% block content %}
     <h1>Cerca un utente oppure un tweet</h1>
+    <br>
     <form action="{% url 'main:search' %}" method="POST">  {% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="Search">
+        <input type="submit" value="Cerca">
     </form>
 
 {% endblock %}

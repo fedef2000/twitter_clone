@@ -8,7 +8,7 @@
     <ul>
     {% for tweet in tweets %}
         <li>
-            {% include "tweet.html" with number_of_likes=number_of_likes post_is_liked=post_is_liked page='Home' pk=0%}
+            {% include "tweet.html" with number_of_likes=tweet.number_of_likes post_is_liked=tweet.post_is_liked page='Home' pk=0%}
         </li>
     {% endfor %}
     </ul>

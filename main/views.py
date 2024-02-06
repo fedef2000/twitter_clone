@@ -145,6 +145,17 @@ class SearchResultsListView(ListView):
         context = super().get_context_data(**kwargs)
         where = self.request.resolver_match.kwargs["where"]
         context['where'] = where
+        if where == "Tweets":
+            context["tweets"] = context["object_list"]
+            if self.request.user.is_authenticated:
+                profile = Profile.objects.get(user=self.request.user)
+                for tweet in context["tweets"]:
+                    likes_connected = get_object_or_404(Tweet, id=tweet.id)
+                    liked = False
+                    if likes_connected.likedBy.filter(id=profile.id).exists():
+                        liked = True
+                    tweet.number_of_likes = likes_connected.number_of_likes()
+                    tweet.post_is_liked = liked
         return context
 
 

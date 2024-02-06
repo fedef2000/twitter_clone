@@ -9,22 +9,22 @@
         <ul>
         {% for tweet in object_list %}
             <li>
-                {% include 'tweet.html' %}
+                {% include 'tweet.html' with number_of_likes=tweet.number_of_likes post_is_liked=tweet.post_is_liked page='Search' pk=tweet.id %}
             </li>
         {% endfor %}
         </ul>
     {%  else %}
     <ul>
-        {% for object in object_list %}
+        {% for profile in object_list %}
             <li>
-            <img src="{{ object.photo }}" height=100>
+            <img src="{{ profile.photo.url }}" height=100>
             <br>
-            Nome: {{ object.name }}
+            Nome: {{ profile.name }}
             <br>
-            Email: {{ object.email }}
+            Email: {{ profile.email }}
             <br>
-            {% if object.bio %}
-                Bio: {{ object.bio }}
+            {% if profile.bio %}
+                Bio: {{ profile.bio }}
             {% endif %}
             <br>
             </li>
