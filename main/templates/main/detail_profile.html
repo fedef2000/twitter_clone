@@ -3,7 +3,13 @@
 {% block title %} Profilo di {{ profile }} {% endblock %}
 
 {% block content %}
-    <img src="{{ profile.photo }}" height=100>
+    {% if profile.user == user %}
+        <form action="{% url 'main:update_profile' pk=profile.id%}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-info">Aggiorna il tuo profilo</button>
+        </form>
+    {% endif %}
+    <img src="{{ profile.photo.url }}" height=100>
     <br>
     Nome: {{ profile.name }}
     <br>

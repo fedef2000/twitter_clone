@@ -12,6 +12,7 @@ urlpatterns = [
     path('updatetweet/<pk>/', views.UpdateTweetView.as_view(), name='update_tweet'),
     path('deletetweet/<pk>/', views.DeleteTweetView.as_view(), name='delete_tweet'),
     path('liketweet/<int:pk>/<str:page>', views.tweetLike, name="tweet_like"),
+    path('updateprofile/<pk>/', views.UpdateProfileView.as_view(), name='update_profile'),
     path("search/", views.search, name="search"),
     path("searchresults/<str:sstring>/<str:where>/", views.SearchResultsListView.as_view(), name="search_results")
 ]

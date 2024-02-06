@@ -3,8 +3,16 @@
 {% block content %}
 
 <form method="post">{% csrf_token %}
-    <p>Sicuro di voler cancellare "{{ object }}"?</p>
+    <h3>Sicuro di voler cancellare questo tweet?</h3>
+    <br>
+    {{ tweet.text }}
+    <br>
+    {% if tweet.photo %}
+        <img src=" {{ tweet.photo.url }}" height=100>
+        <br>
+    {% endif %}
     <input type="submit" value="Conferma">
+    <br>
 </form>
 
  {% endblock %}

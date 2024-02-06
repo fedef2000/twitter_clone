@@ -68,17 +68,6 @@ class UpdateTweetView(LoginRequiredMixin, UpdateView):
         pk = self.get_context_data()["object"].pk
         return reverse("main:detail_tweet", kwargs={'pk': pk})
 
-    def get_object(self, *args, **kwargs):
-        tweet = super(UpdateTweetView, self).get_object(*args, **kwargs)
-        profile = Profile.objects.get(user=self.request.user)
-        if not tweet.author == profile:
-            raise Http404
-        return tweet
-
-    def form_valid(self, form):
-        form.instance.owner_user = self.request.user
-        return super(UpdateTweetView, self).form_valid(form)
-
 
 class DeleteTweetView(LoginRequiredMixin, DeleteView):
     model = Tweet
@@ -120,7 +109,8 @@ class ProfileDetailView(DetailView):
                     liked = True
                 tweet.number_of_likes = tweet.number_of_likes()
                 tweet.post_is_liked = liked
-        context["user"] = self.request.user # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
+        context[
+            "user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
         return context
@@ -156,3 +146,12 @@ class SearchResultsListView(ListView):
         where = self.request.resolver_match.kwargs["where"]
         context['where'] = where
         return context
+
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    template_name = "main/update_profile.html"
+    fields = ["name", "photo", "bio"]
+
+    def get_success_url(self):
+        return reverse("main:detail_profile", kwargs={'pk': self.request.user.id})

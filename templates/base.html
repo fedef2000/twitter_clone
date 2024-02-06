@@ -23,15 +23,6 @@
 <title>{% block title %} {% endblock %}</title> 
 
 <body>
-{% comment %}
-	
-<div class="jumbotron text-center" style="margin-bottom:0">
-{% block header1 %}
-  <h1>Header</h1>
-  <p>Subtitle</p> 
-{% endblock %}
-</div>
-{% endcomment %}
 
 {% if user.is_authenticated and "ok" in request.GET.login  %}
 
@@ -89,7 +80,7 @@
                 {% csrf_token %}
                 <button class="btn btn-info" type="submit">logout</button>
             </form>
-            <a class="btn btn-info" href="{% url 'main:detail_profile' pk=user.id %}" role="button">Profilo</a>
+            <a class="btn btn-info" href="{% url 'main:detail_profile' pk=user.id %}" role="button">Il mio profilo</a>
         {% else %}
         <a class="btn btn-info" href="{% url 'register' %}" role="button">Registrati</a>
         <a class="btn btn-info" href="{% url 'login' %}" role="button">Login</a>

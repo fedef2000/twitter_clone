@@ -6,28 +6,42 @@
     <small class="text-muted">{{ tweet.date.astimezone }}</small>
 </div>
 
-<a href="{% url "main:detail_tweet" pk=tweet.id %}" >
-    {{ tweet.text }}
-</a>
 
-<br>
-{% if tweet.photo %}
-    <img src=" {{ tweet.photo.url }}" height=100>
-<br>
-{% endif %}
+<div>
+    <a href="{% url "main:detail_tweet" pk=tweet.id %}" >
+    {{ tweet.text }}
+        <br>
+        {% if tweet.photo %}
+            <img src=" {{ tweet.photo.url }}" height=100>
+            <br>
+        {% endif %}
 <!-- LIKES -->
-{% if user.is_authenticated %}
-  <form action="{% url 'main:tweet_like' pk=pk page=page %}" method="POST">
-    {% csrf_token %}
-    {% if post_is_liked %}
-    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
+    {% if user.is_authenticated %}
+        <form action="{% url 'main:tweet_like' pk=pk page=page %}" method="POST">
+        
+            {% csrf_token %}
+            {% if post_is_liked %}
+                <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
+        
+            {% else %}
+                <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>
+            {% endif %}
+        </form>
+        {% if user == tweet.author.user %}
+            <form action="{% url 'main:update_tweet' pk=tweet.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info">Modifica tweet</button>
+            </form>
+            <form action="{% url 'main:delete_tweet' pk=tweet.id %}" method="GET">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info">Elimina tweet</button>
+            </form>
+        {% endif %} 
     {% else %}
-    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>
+        <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Fai il login per mettere like</a><br>
     {% endif %}
-  </form>
-{% else %}
-  <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Fai il login per mettere like</a><br>
-{% endif %}
-<strong class="text-secondary">{{ tweet.likedBy.count }} Like{{ tweet.likedBy.count|pluralize }}</strong>
-<br>
-<br>
+        <strong class="text-secondary">{{ tweet.likedBy.count }} Like{{ tweet.likedBy.count|pluralize }}</strong>
+        <br>
+        <br>
+    </a>
+</div>
