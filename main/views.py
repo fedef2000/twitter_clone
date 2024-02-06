@@ -71,7 +71,7 @@ class DeleteTweetView(LoginRequiredMixin, DeleteView):
 
 
 def search_tweet(request, text):
-    qs = Tweet.objects.filter(text__icontains=text)
+    qs = Tweet.objects.filter(text__icontains=text).order_by("-date")
     return render(request, template_name="main/search_tweet.html", context={"object_list": qs})
 
 
@@ -90,7 +90,7 @@ class ProfileDetailView(DetailView):
         pk = context["object"].pk
         user = User.objects.get(id=pk)
         profile = Profile.objects.get(user=user)
-        tweets = Tweet.objects.filter(author=profile)
+        tweets = Tweet.objects.filter(author=profile).order_by("-date")
         context["profile"] = profile
         context['tweets'] = tweets
         return context
@@ -119,7 +119,7 @@ class SearchResultsListView(ListView):
         if "Users" in where:
             return Profile.objects.filter(name__icontains=sstring)
         else:
-            return Tweet.objects.filter(text__icontains=sstring)
+            return Tweet.objects.filter(text__icontains=sstring).order_by("-date")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -85,16 +85,15 @@
     </div>
     <div>
         {% if user.is_authenticated %}
-          <form class="btn" method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button class="btn btn-info" type="submit">logout</button>
-          </form>
-          <a class="btn btn-info" href="{% url 'main:detail_profile' pk=user.id %}" role="button">Profilo</a>
-      {% else %}
-      <a class="btn btn-info" href="{% url 'register' %}" role="button">Registrati</a>
-      <a class="btn btn-info" href="{% url 'login' %}" role="button">Login</a>
-      {% endif %}
-
+            <form class="btn" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-info" type="submit">logout</button>
+            </form>
+            <a class="btn btn-info" href="{% url 'main:detail_profile' pk=user.id %}" role="button">Profilo</a>
+        {% else %}
+        <a class="btn btn-info" href="{% url 'register' %}" role="button">Registrati</a>
+        <a class="btn btn-info" href="{% url 'login' %}" role="button">Login</a>
+        {% endif %}
     </div>
     {% endblock %} 
   </nav>
