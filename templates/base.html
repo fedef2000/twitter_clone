@@ -30,7 +30,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Welcome {{user.username}} </h5>
+        <h5 class="modal-title">Benvenuto {{user.username}}!</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -91,12 +91,16 @@
   </nav>
 
 
-  
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-warning">
+              {{ message }} 
+          </div>
+      {% endfor %}
+  {% endif %}
   <div class="container" style="margin-top:30px">
-    
       <div class="col-sm-22">
         <center>
-
         {% block content %}
         <h2>TITLE HEADING</h2>
         <h5>Title description, Dec 7, 2017</h5>

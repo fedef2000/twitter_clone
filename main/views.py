@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -62,6 +64,7 @@ class CreateTweetView(LoginRequiredMixin, CreateView):
         tweet = form.save(commit=False)
         tweet.author = Profile.objects.get(user=User.objects.get(username=self.request.user))
         tweet.save()
+        messages.success(self.request, 'Tweet creato con successo')
         return HttpResponseRedirect(self.success_url)
 
 
@@ -74,11 +77,17 @@ class UpdateTweetView(LoginRequiredMixin, UpdateView):
         pk = self.get_context_data()["object"].pk
         return reverse("main:detail_tweet", kwargs={'pk': pk})
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Tweet modificato con successo')
+
 
 class DeleteTweetView(LoginRequiredMixin, DeleteView):
     model = Tweet
     template_name = "main/delete_tweet.html"
     success_url = reverse_lazy("main:tweet_list")
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Tweet cancellato con successo')
 
 
 def tweetLike(request, pk, page):
