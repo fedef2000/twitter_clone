@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from main.forms import SearchForm
-from main.models import Tweet, Profile
+from main.models import Tweet, Profile, UserFollowing
 
 
 # Create your views here.
@@ -19,12 +19,7 @@ class ListTweets(ListView):
         if self.request.user.is_authenticated:
             profile = Profile.objects.get(user=self.request.user)
             for tweet in tweets:
-                likes_connected = get_object_or_404(Tweet, id=tweet.id)
-                liked = False
-                if likes_connected.likedBy.filter(id=profile.id).exists():
-                    liked = True
-                tweet.number_of_likes = likes_connected.number_of_likes()
-                tweet.post_is_liked = liked
+                tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
         return tweets
 
 
@@ -33,17 +28,12 @@ class DetailTweetView(DetailView):
     template_name = "main/detail_tweet.html"
     context_object_name = 'tweet'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_object(self, **kwargs):
+        tweet = super(DetailTweetView, self).get_object()
         if self.request.user.is_authenticated:
-            likes_connected = get_object_or_404(Tweet, id=self.kwargs['pk'])
             profile = Profile.objects.get(user=self.request.user)
-            liked = False
-            if likes_connected.likedBy.filter(id=profile.id).exists():
-                liked = True
-            context['number_of_likes'] = likes_connected.number_of_likes()
-            context['post_is_liked'] = liked
-        return context
+            tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
+        return tweet
 
 
 class CreateTweetView(LoginRequiredMixin, CreateView):
@@ -101,16 +91,17 @@ class ProfileDetailView(DetailView):
         profile = Profile.objects.get(user=User.objects.get(id=pk))
         tweets = Tweet.objects.filter(author=profile).order_by("-date")
         if self.request.user.is_authenticated:
+            user = User.objects.get(id=self.request.user.id)
+            p = Profile.objects.get(user=user)
             for tweet in tweets:
-                user = User.objects.get(id=self.request.user.id)
-                p = Profile.objects.get(user=user)
-                liked = False
-                if tweet.likedBy.filter(id=p.id).exists():
-                    liked = True
-                tweet.number_of_likes = tweet.number_of_likes()
-                tweet.post_is_liked = liked
-        context[
-            "user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
+                tweet.post_is_liked = tweet.likedBy.filter(id=p.id).exists()
+            print(profile)
+            print(p)
+            if UserFollowing.objects.filter(profile=p, following=profile).exists():
+                context["is_following"] = True
+            else:
+                context["is_following"] = False
+        context["user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
         return context
@@ -150,12 +141,8 @@ class SearchResultsListView(ListView):
             if self.request.user.is_authenticated:
                 profile = Profile.objects.get(user=self.request.user)
                 for tweet in context["tweets"]:
-                    likes_connected = get_object_or_404(Tweet, id=tweet.id)
-                    liked = False
-                    if likes_connected.likedBy.filter(id=profile.id).exists():
-                        liked = True
-                    tweet.number_of_likes = likes_connected.number_of_likes()
-                    tweet.post_is_liked = liked
+                    tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
+
         return context
 
 
@@ -166,3 +153,14 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse("main:detail_profile", kwargs={'pk': self.request.user.id})
+
+
+def follow(request, pk):
+    profile = Profile.objects.get(user=request.user)
+    following = get_object_or_404(Profile, id=request.POST.get('profile_id'))
+    if UserFollowing.objects.filter(profile=profile, following=following).exists():
+        UserFollowing.objects.filter(profile=profile, following=following).delete()
+    else:
+        UserFollowing.objects.create(profile=profile, following=following)
+
+    return HttpResponseRedirect(reverse('main:detail_profile', args=[str(pk)]))

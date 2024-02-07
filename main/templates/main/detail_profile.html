@@ -8,8 +8,23 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-info">Aggiorna il tuo profilo</button>
         </form>
+    {% else %}
+    {% if user.is_authenticated %}
+        <form action="{% url 'main:follow' pk=profile.user.id %}" method="POST">
+            {% csrf_token %}
+            {% if is_following %}
+                <button type="submit" name="profile_id" value="{{profile.id}}" class="btn btn-info">Smetti di seguire</button>
+            {% else %}
+                <button type="submit" name="profile_id" value="{{profile.id}}" class="btn btn-info">Segui</button>
+            {% endif %}
+        </form>
+    {% else %}
+        <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Fai il login per seguire questo profilo</a><br>
     {% endif %}
-    <img src="{{ profile.photo.url }}" height=100>
+
+    {% endif %}
+
+    <img src="{{ profile.photo.url }}" height=100 alt="">
     <br>
     Nome: {{ profile.name }}
     <br>
@@ -23,7 +38,7 @@
     <h4>Tweets di {{ profile.name }}</h4>
     {% if tweets.count > 0 %}
     {% for tweet in tweets %}
-    	{% include 'tweet.html' with number_of_likes=tweet.number_of_likes post_is_liked=tweet.post_is_liked page='Profile' pk=profile.user.id%}
+    	{% include 'tweet.html' with page='Profile' pk=profile.user.id%}
     {% endfor %}
     {% else %}
         L'utente non ha ancora pubblicato tweet

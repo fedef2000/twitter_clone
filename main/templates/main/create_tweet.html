@@ -7,14 +7,4 @@
         <input type="submit" value="Pubblica">
     </form>
 
-
-    {% comment %}
-    <form method="post" enctype="multipart/form-data" action="{% url 'main:create_tweet' %}"> {% csrf_token %}
-        <label for="text">testo:</label><br>
-        <input type="text" id="text" name="text" ><br>
-        <label for="photo">Immagine:</label><br>
-        <input type="file" id="photo" name="photo"><br><br>
-        <input type="submit" value="Pubblica">
-    </form>
-    {% endcomment %}
 {% endblock %}

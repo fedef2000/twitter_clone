@@ -1,5 +1,5 @@
 {% extends "base.html" %}
 {% block title %} Dettagli tweet {% endblock %}
 {% block content %} 
-    {% include "tweet.html" with number_of_likes=tweet.number_of_likes post_is_liked=tweet.post_is_liked page='Tweet' pk=tweet.id%}
+    {% include "tweet.html" with page='Tweet' pk=tweet.id%}
  {% endblock %}

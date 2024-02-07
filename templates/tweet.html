@@ -20,7 +20,7 @@
         <form action="{% url 'main:tweet_like' pk=pk page=page %}" method="POST">
         
             {% csrf_token %}
-            {% if post_is_liked %}
+            {% if tweet.post_is_liked %}
                 <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
             {% else %}
                 <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>

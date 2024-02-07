@@ -42,10 +42,10 @@ def init_db():
                 print("errore durante il salvataggio")
 
     # make some user follow some other
-    for i in range(4):
-        user = Profile.objects.get(name=profiles["name"][i])
-        follow = Profile.objects.get(name=profiles["name"][i + 1])
-        UserFollowing.objects.create(user_id=user, following_user_id=follow)
+#    for i in range(4):
+ #       user = Profile.objects.get(name=profiles["name"][i])
+  #      follow = Profile.objects.get(name=profiles["name"][i + 1])
+   #     UserFollowing.objects.create(user_id=user, following_user_id=follow)
 
     tweets = {
         "text": ["Lorem ipsum", "Sic transit gloria mundi", "Aleja iacta est", "Quid pro qui", "Vamonos"],
