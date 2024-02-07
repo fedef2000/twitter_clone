@@ -6,6 +6,7 @@ app_name = 'main'
 
 urlpatterns = [
     path('home/', views.ListTweets.as_view(), name='tweet_list'),
+    path('feed/', views.Feed.as_view(), name='feed'),
     path('tweet/<pk>/', views.DetailTweetView.as_view(), name='detail_tweet'),
     path('profile/<pk>/', views.ProfileDetailView.as_view(), name='detail_profile'),
     path('createtweet/', views.CreateTweetView.as_view(), name='create_tweet'),

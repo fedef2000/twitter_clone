@@ -23,6 +23,22 @@ class ListTweets(ListView):
         return tweets
 
 
+class Feed(LoginRequiredMixin, ListView):
+    model = Tweet
+    template_name = "main/feed.html"
+    context_object_name = 'tweets'
+
+    def get_queryset(self):
+        tweets = Tweet.objects.none()
+        profile = Profile.objects.get(user=self.request.user)
+        for p in profile.followings.all():
+            if Tweet.objects.filter(author=p.following).exists():
+                tweets |= Tweet.objects.filter(author=p.following)
+            for tweet in tweets:
+                tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
+        return tweets.order_by("-date")
+
+
 class DetailTweetView(DetailView):
     model = Tweet
     template_name = "main/detail_tweet.html"
@@ -77,6 +93,8 @@ def tweetLike(request, pk, page):
         return HttpResponseRedirect(reverse('main:tweet_list'))
     elif page == "Profile":
         return HttpResponseRedirect(reverse('main:detail_profile', args=[str(pk)]))
+    elif page == "Feed":
+        return HttpResponseRedirect(reverse('main:feed'))
     else:
         return HttpResponseRedirect(reverse('main:detail_tweet', args=[str(pk)]))
 
@@ -95,8 +113,6 @@ class ProfileDetailView(DetailView):
             p = Profile.objects.get(user=user)
             for tweet in tweets:
                 tweet.post_is_liked = tweet.likedBy.filter(id=p.id).exists()
-            print(profile)
-            print(p)
             if UserFollowing.objects.filter(profile=p, following=profile).exists():
                 context["is_following"] = True
             else:

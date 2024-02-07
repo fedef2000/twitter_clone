@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="refactor search page">
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="added follow function and button">
+      <change afterPath="$PROJECT_DIR$/main/migrations/0008_rename_following_user_id_userfollowing_following_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/feed.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/team_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/create_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/create_tweet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_tweet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/list_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/list_tweet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/search_results.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_results.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tweet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twitter_clone/initDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +125,7 @@
       <workItem from="1707165337868" duration="2367000" />
       <workItem from="1707232676093" duration="6736000" />
       <workItem from="1707249683093" duration="7214000" />
-      <workItem from="1707318268193" duration="3693000" />
+      <workItem from="1707318268193" duration="5398000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -242,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707256984447</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added follow function and button">
+      <option name="closed" value="true" />
+      <created>1707322126915</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1707322126915</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,6 +280,7 @@
     <MESSAGE value="fixed image" />
     <MESSAGE value="added profile update view and button" />
     <MESSAGE value="refactor search page" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor search page" />
+    <MESSAGE value="added follow function and button" />
+    <option name="LAST_COMMIT_MESSAGE" value="added follow function and button" />
   </component>
 </project>

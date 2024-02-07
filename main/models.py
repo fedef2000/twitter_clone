@@ -30,8 +30,8 @@ class Tweet(models.Model):
 
 
 class UserFollowing(models.Model):
-    profile = models.ForeignKey(Profile, related_name="following", on_delete=models.CASCADE)
-    following = models.ForeignKey(Profile, related_name="followers", on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, related_name="followings", on_delete=models.CASCADE)
+    following = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def is_following(self, profile):
         if self.profile == profile:

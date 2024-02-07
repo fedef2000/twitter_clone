@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Lista tweet {% endblock %}
+
+{% block content %}
+    {% if not tweets %}
+        <h2>Non ci sono tweet da mostrare</h2>
+    {% else %}
+        <h2>Ecco i tweet dagli utenti che segui</h2>
+        <br>
+        <ul>
+            {% for tweet in tweets %}
+                <li>
+                    {% include "tweet.html" with page='Feed' pk=0%}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
