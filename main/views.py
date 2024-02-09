@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileUpdateForm, SearchTweetForm, SearchProfileForm
+from main.forms import SearchTweetForm, SearchProfileForm
 from main.models import Tweet, Profile, UserFollowing
 
 
@@ -130,8 +130,7 @@ class ProfileDetailView(DetailView):
                 context["is_following"] = True
             else:
                 context["is_following"] = False
-        context[
-            "user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
+        context["user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
         return context
@@ -198,7 +197,7 @@ class SearchTweetView(ListView):
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     template_name = "main/update_profile.html"
-    form_class = ProfileUpdateForm
+    fields = ["name", "photo", "bio"]
 
     def get_success_url(self):
         return reverse("main:detail_profile", kwargs={'pk': self.request.user.id})
