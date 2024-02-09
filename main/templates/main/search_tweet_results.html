@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Search Results  {% endblock %}
+
+{% block content %}
+
+{% if object_list %}
+    <ul>
+        {% for tweet in object_list %}
+            <li>
+                {% include 'tweet.html' with page='Tweet' pk=tweet.id %}
+            </li>
+        {% endfor %}
+        </ul>
+{% else %}
+    <p>Non ci sono tweet in questa categoria</p>
+{% endif %}
+
+{% endblock %}

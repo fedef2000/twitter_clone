@@ -71,7 +71,10 @@
               
           {% endif %}
           <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:search' %}">Cerca</a>
+              <a class="nav-link" href="{% url 'main:search_profile' %}">Cerca un utente</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:search_tweet' %}">Cerca tweet</a>
           </li>
       </ul>
     </div>

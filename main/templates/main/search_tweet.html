@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Search Page Form {% endblock %}
+{% block content %}
+    <h1>Cerca un tweet</h1>
+    <br>
+    <form action="{% url 'main:search_tweet' %}" method="POST">  {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Cerca">
+    </form>
+
+{% endblock %}

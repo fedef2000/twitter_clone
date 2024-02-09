@@ -4,11 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="added feed">
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="added alert message on CRUD tweet operations">
+      <change afterPath="$PROJECT_DIR$/main/migrations/0009_tweet_category_alter_userfollowing_following_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/search_tweet.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/templates/main/search_tweet_results.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profile_photo/DALLE_2023-12-27_15.20.36_-_che_guevara_playing_football_as_a_goalkeeper.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/DALLE_2023-12-27_15.20.36_-_che_guevara_playing_football_as_a_goalkeeper.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/DALLE_2023-12-27_15.20.36_-_che_guevara_playing_football_as_a_goalkeeper_mx5BqVC.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/team.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/404_handler.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/list_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/list_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/search_results.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_profile_results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/update_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/update_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/update_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/update_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/initDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +74,7 @@
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/feder/PycharmProjects/twitter_clone/main/templates/main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -61,6 +85,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\feder\PycharmProjects\twitter_clone\main\templates\main" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media" />
       <recent name="C:\Users\feder\PycharmProjects\twitter_clone\media\profile_pic" />
@@ -120,7 +147,10 @@
       <workItem from="1707165337868" duration="2367000" />
       <workItem from="1707232676093" duration="6736000" />
       <workItem from="1707249683093" duration="7214000" />
-      <workItem from="1707318268193" duration="6721000" />
+      <workItem from="1707318268193" duration="7203000" />
+      <workItem from="1707404405868" duration="8875000" />
+      <workItem from="1707489835868" duration="6157000" />
+      <workItem from="1707511197446" duration="944000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -250,7 +280,23 @@
       <option name="project" value="LOCAL" />
       <updated>1707324501271</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="added alert message on CRUD tweet operations">
+      <option name="closed" value="true" />
+      <created>1707325958679</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1707325958680</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added alert message on CRUD tweet operations">
+      <option name="closed" value="true" />
+      <created>1707325984064</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1707325984064</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +331,8 @@
     <MESSAGE value="refactor search page" />
     <MESSAGE value="added follow function and button" />
     <MESSAGE value="added feed" />
-    <option name="LAST_COMMIT_MESSAGE" value="added feed" />
+    <MESSAGE value="added alert message on CUD tweet operations" />
+    <MESSAGE value="added alert message on CRUD tweet operations" />
+    <option name="LAST_COMMIT_MESSAGE" value="added alert message on CRUD tweet operations" />
   </component>
 </project>

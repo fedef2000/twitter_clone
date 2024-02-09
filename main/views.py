@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views.generic import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import SearchForm
+from main.forms import ProfileUpdateForm, SearchTweetForm, SearchProfileForm
 from main.models import Tweet, Profile, UserFollowing
 
 
@@ -17,7 +17,7 @@ class ListTweets(ListView):
     context_object_name = 'tweets'
 
     def get_queryset(self):
-        tweets = self.model.objects.order_by("-date")[:20]
+        tweets = self.model.objects.filter(date__lte=timezone.now()).order_by("-date")[:20]
         if self.request.user.is_authenticated:
             profile = Profile.objects.get(user=self.request.user)
             for tweet in tweets:
@@ -38,7 +38,7 @@ class Feed(LoginRequiredMixin, ListView):
                 tweets |= Tweet.objects.filter(author=p.following)
             for tweet in tweets:
                 tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
-        return tweets.order_by("-date")
+        return tweets.filter(date__lte=timezone.now()).order_by("-date")
 
 
 class DetailTweetView(DetailView):
@@ -57,7 +57,7 @@ class DetailTweetView(DetailView):
 class CreateTweetView(LoginRequiredMixin, CreateView):
     model = Tweet
     template_name = "main/create_tweet.html"
-    fields = ["text", "photo"]
+    fields = ["text", "photo", "category"]
     success_url = reverse_lazy("main:tweet_list")
 
     def form_valid(self, form):
@@ -71,14 +71,16 @@ class CreateTweetView(LoginRequiredMixin, CreateView):
 class UpdateTweetView(LoginRequiredMixin, UpdateView):
     model = Tweet
     template_name = "main/update_tweet.html"
-    fields = ["text", "photo"]
+    fields = ["text", "photo", "category"]
 
     def get_success_url(self):
         pk = self.get_context_data()["object"].pk
         return reverse("main:detail_tweet", kwargs={'pk': pk})
 
     def form_valid(self, form):
+        form.save()
         messages.success(self.request, 'Tweet modificato con successo')
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DeleteTweetView(LoginRequiredMixin, DeleteView):
@@ -87,7 +89,9 @@ class DeleteTweetView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("main:tweet_list")
 
     def form_valid(self, form):
+        self.get_object().delete()
         messages.success(self.request, 'Tweet cancellato con successo')
+        return HttpResponseRedirect(self.success_url)
 
 
 def tweetLike(request, pk, page):
@@ -98,14 +102,14 @@ def tweetLike(request, pk, page):
     else:
         tweet.likedBy.add(profile)
 
-    if page == "Home":
-        return HttpResponseRedirect(reverse('main:tweet_list'))
-    elif page == "Profile":
+    if page == "Profile":
         return HttpResponseRedirect(reverse('main:detail_profile', args=[str(pk)]))
     elif page == "Feed":
         return HttpResponseRedirect(reverse('main:feed'))
-    else:
+    elif page == "Tweet":
         return HttpResponseRedirect(reverse('main:detail_tweet', args=[str(pk)]))
+    else:
+        return HttpResponseRedirect(reverse('main:tweet_list'))
 
 
 class ProfileDetailView(DetailView):
@@ -126,47 +130,67 @@ class ProfileDetailView(DetailView):
                 context["is_following"] = True
             else:
                 context["is_following"] = False
-        context["user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
+        context[
+            "user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
         return context
 
 
-def search(request):
+def search_profile(request):
     if request.method == "POST":
-        form = SearchForm(request.POST)
+        form = SearchProfileForm(request.POST)
         if form.is_valid():
-            sstring = form.cleaned_data.get("search_string")
-            where = form.cleaned_data.get("search_where")
-            return redirect("main:search_results", sstring, where)
+            name = form.cleaned_data.get("name")
+            return redirect("main:search_profile_results", name)
     else:
-        form = SearchForm()
-    return render(request, template_name="main/search.html", context={"form": form})
+        form = SearchProfileForm()
+    return render(request, template_name="main/search_profile.html", context={"form": form})
 
 
-class SearchResultsListView(ListView):
+class SearchProfileResults(ListView):
     model = Profile
-    template_name = "main/search_results.html"
+    template_name = "main/search_profile_results.html"
 
     def get_queryset(self):
-        sstring = self.request.resolver_match.kwargs["sstring"]
-        where = self.request.resolver_match.kwargs["where"]
+        name = self.request.resolver_match.kwargs["name"]
+        return Profile.objects.filter(name__icontains=name)
 
-        if "Users" in where:
-            return Profile.objects.filter(name__icontains=sstring)
+
+def search_tweet(request):
+    if request.method == "POST":
+        form = SearchTweetForm(request.POST)
+        if form.is_valid():
+            category = form.cleaned_data.get("category")
+            text = form.cleaned_data.get("text")
+            if text == "":
+                text = " "
+            return redirect("main:search_tweet_results",  category=category, text=text)
+    else:
+        form = SearchTweetForm()
+    return render(request, template_name="main/search_tweet.html", context={"form": form})
+
+
+class SearchTweetView(ListView):
+    model = Tweet
+    template_name = "main/search_tweet_results.html"
+
+    def get_queryset(self):
+        category = self.request.resolver_match.kwargs["category"]
+        text = self.request.resolver_match.kwargs["text"]
+        if text == " ":
+            return Tweet.objects.filter(category__icontains=category).order_by("-date")
         else:
-            return Tweet.objects.filter(text__icontains=sstring).order_by("-date")
+            return Tweet.objects.filter(text__icontains=text, category__icontains=category).order_by("-date")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        where = self.request.resolver_match.kwargs["where"]
-        context['where'] = where
-        if where == "Tweets":
-            context["tweets"] = context["object_list"]
-            if self.request.user.is_authenticated:
-                profile = Profile.objects.get(user=self.request.user)
-                for tweet in context["tweets"]:
-                    tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
+        context["category"] = self.request.resolver_match.kwargs["category"]
+        context["tweets"] = context["object_list"]
+        if self.request.user.is_authenticated:
+            profile = Profile.objects.get(user=self.request.user)
+            for tweet in context["tweets"]:
+                tweet.post_is_liked = tweet.likedBy.filter(id=profile.id).exists()
 
         return context
 
@@ -174,10 +198,18 @@ class SearchResultsListView(ListView):
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     template_name = "main/update_profile.html"
-    fields = ["name", "photo", "bio"]
+    form_class = ProfileUpdateForm
 
     def get_success_url(self):
         return reverse("main:detail_profile", kwargs={'pk': self.request.user.id})
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        if not profile.photo:
+            profile.photo = "defaultProfileImage.jpg"
+        profile.save()
+        messages.success(self.request, 'Profilo aggiornato con successo')
+        return HttpResponseRedirect(self.get_success_url())
 
 
 def follow(request, pk):

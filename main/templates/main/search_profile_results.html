@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Search Results  {% endblock %}
+
+{% block content %}
+
+{% if object_list %}
+    <ul>
+        {% for profile in object_list %}
+            <li>
+            <a href="{% url "main:detail_profile" pk=profile.user.id %}">
+                <img src="{{ profile.photo.url }}" height=100 alt="">
+                <br>
+                {{ profile.name }}
+                <br>
+                {% if profile.bio %}
+                    Bio: {{ profile.bio }}
+                {% endif %}
+                <br>
+                <br>
+            </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Non ci sono utenti con questo nome</p>
+{% endif %}
+
+{% endblock %}

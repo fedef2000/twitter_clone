@@ -32,6 +32,7 @@ urlpatterns = [
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+handler404 = 'twitter_clone.views.handler404'
 
 erase_db()
 init_db()

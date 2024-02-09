@@ -1,10 +1,29 @@
 from django import forms
 
+from main.models import Profile, Tweet
 
-class SearchForm(forms.Form):
-    CHOICE_LIST = [
-        ("Users", "utenti"),
-        ("Tweets", "tweet")
+
+class SearchProfileForm(forms.Form):
+    name = forms.CharField(label="Come si chiama l'utente che vuoi cercare?", max_length=100, min_length=3, required=True)
+
+
+class SearchTweetForm(forms.Form):
+    choices = [
+        ("Sport", "Sport"),
+        ("Politica", "Politica"),
+        ("Cinema", "Cinema"),
+        ("Musica", "Musica"),
+        ("Viaggi", "Viaggi"),
+        ("Tecnologia", "Tecnologia"),
+        ("Cucina", "Cucina"),
+        ("Arte", "Arte"),
+        ("Fotografia", "Fotografia")
     ]
-    search_string = forms.CharField(label="Cosa vuoi cercare?", max_length=100, min_length=3, required=True)
-    search_where = forms.ChoiceField(label="Dove lo vuoi cercare?", required=True, choices=CHOICE_LIST)
+    text = forms.CharField(label="Scrivi il testo che vuoi cercare (opzionale)", max_length=100, required=False)
+    category = forms.ChoiceField(label="Quale categoria ti interessa?", required=True, choices=choices)
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'photo', 'bio']

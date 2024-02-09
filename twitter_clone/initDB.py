@@ -1,7 +1,25 @@
+import datetime
 import random
 
 from main.models import *
 from django.contrib.auth.models import User
+
+
+def create_user(username, email, password):
+    return User.objects.create_user(username=username, email=email, password=password)
+
+
+def create_profile(user, name):
+    return Profile.objects.create(user=user, name=name)
+
+
+def create_tweet(author, text, category, days):
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Tweet.objects.create(author=author, text=text, date=time, category=category)
+
+
+def create_follower(follower, following):
+    UserFollowing.objects.create(profile=follower, following=following)
 
 
 def erase_db():
@@ -15,56 +33,30 @@ def erase_db():
 def init_db():
 
     profiles = {
-        "name": ["fede", "George Orwell", "Omero", "Alessandro Baricco", "Virgilio"],
-        "email": ["manzoni@gmail.com", "orwell@gmail.com", "omero@gmail.com", "baricco@gmail.com",
+        "name": ["Francesco Castagnoli", "George Orwell", "Paolo Rossi", "Alessandro Baricco", "Vincenzo Virgilio"],
+        "email": ["FraCasta@gmail.com", "orwell@gmail.com", "PRossi@gmail.com", "baricco@gmail.com",
                   "virgilio@gmail.com"],
-        "password": ["fede", "12345678", "12345678", "12345678", "12345678"],
+        "password": ["12345678", "12345678", "12345678", "12345678", "12345678"],
+    }
+    tweets = {
+        "text": ["Il mio sport preferito è il basket", "Alle prossime elezioni non andrò a votare", "Fellini è il miglior regista di sempre", "Ascoltate il nuovo album di Calcutta", "Domani partirò per la Thailandia", "Ho appena comprato il nuovo Iphone", "Oggi si guarda masterchef", "Al museo a guardare Monet", "Guardate che bella foto"],
+        "category": ["Sport", "Politica", "Cinema", "Musica", "Viaggi", "Tecnologia", "Cucina", "Arte", "Fotografia"]
+
     }
 
-    # add new profiles
+    # add a superuser
+    user = User.objects.create_superuser(username="fede", email="fede@gmail.com", password="fede")
+    create_profile(user=user, name="Federico Ferrari")
+
     for i in range(5):
         try:
-            if profiles["name"][i] == "fede":
-                user = User.objects.create_superuser(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
-            else:
-                user = User.objects.create_user(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
-        except:
-            print("Errore in Username: " + profiles["name"][i])
-        else:
-            p = Profile()
-            p.user = user
-            for k in profiles:
-                if k == "name":
-                    p.name = profiles[k][i]
-            try:
-                p.save()
-            except:
-                print("errore durante il salvataggio")
+            user = create_user(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
+            profile = create_profile(user=user, name=profiles["name"][i])
+            n = random.randint(0,8)
+            create_tweet(profile, tweets["text"][n], tweets["category"][n], -5)
+        except Exception as e:
+            print(e)
 
-    # make some user follow some other
-#    for i in range(4):
- #       user = Profile.objects.get(name=profiles["name"][i])
-  #      follow = Profile.objects.get(name=profiles["name"][i + 1])
-   #     UserFollowing.objects.create(user_id=user, following_user_id=follow)
-
-    tweets = {
-        "text": ["Lorem ipsum", "Sic transit gloria mundi", "Aleja iacta est", "Quid pro qui", "Vamonos"],
-    }
-
-    # create some tweets
-    for i in range(20):
-        t = Tweet()
-        n = random.randint(0, len(tweets["text"]) - 1)
-        t.text = tweets["text"][n]
-        x = random.randint(0, len(profiles["name"]) - 1)
-        author = Profile.objects.get(name=profiles["name"][x])
-        t.author = author
-        if i == 3:
-            t.photo = "defaultTweet.jpg"
-        try:
-            t.save()
-        except:
-            print("errore durante la creazione di un tweet")
 
     print("DUMP DB")
     print(Profile.objects.all())

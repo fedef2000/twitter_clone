@@ -15,7 +15,9 @@ urlpatterns = [
     path('liketweet/<int:pk>/<str:page>', views.tweetLike, name="tweet_like"),
     path('updateprofile/<pk>/', views.UpdateProfileView.as_view(), name='update_profile'),
     path('follow/<int:pk>', views.follow, name="follow"),
-    path("search/", views.search, name="search"),
-    path("searchresults/<str:sstring>/<str:where>/", views.SearchResultsListView.as_view(), name="search_results")
+    path("searchProfile/", views.search_profile, name="search_profile"),
+    path("searchProfileResults/<str:name>/", views.SearchProfileResults.as_view(), name="search_profile_results"),
+    path("searchTweet/", views.search_tweet, name="search_tweet"),
+    path("searchTweetResults/<str:category>/<str:text>", views.SearchTweetView.as_view(), name="search_tweet_results")
 ]
 

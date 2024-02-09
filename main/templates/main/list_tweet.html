@@ -6,11 +6,14 @@
     <h2>Ecco gli ultimi 20 tweet</h2>
     <br>
     <ul>
-    {% for tweet in tweets %}
-        <li>
-            {% include "tweet.html" with page='Home' pk=0%}
-        </li>
-    {% endfor %}
-    </ul>
-
+    {% if tweets %}
+        {% for tweet in tweets %}
+            <li>
+                {% include "tweet.html" with page='Home' pk=0%}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        Non ci sono tweet da mostrare
+    {% endif %}
 {% endblock %}

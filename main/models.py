@@ -15,9 +15,23 @@ class Profile(models.Model):
         return "user: " + self.user.__str__() + ", name: " + self.name + ", tweets: " + str(self.tweets)
 
 
+choices = [
+    ("Sport", "Sport"),
+    ("Politica", "Politica"),
+    ("Cinema", "Cinema"),
+    ("Musica", "Musica"),
+    ("Viaggi", "Viaggi"),
+    ("Tecnologia", "Tecnologia"),
+    ("Cucina", "Cucina"),
+    ("Arte", "Arte"),
+    ("Fotografia", "Fotografia")
+]
+
+
 class Tweet(models.Model):
     text = models.TextField(max_length=500)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='tweets')
+    category = models.CharField(max_length=10, choices=choices)
     date = models.DateTimeField(default=timezone.now, blank=True)
     photo = models.ImageField(upload_to='tweet_photo', blank=True, null=True)
     likedBy = models.ManyToManyField(Profile, related_name='likedTweet', blank=True)
@@ -32,8 +46,3 @@ class Tweet(models.Model):
 class UserFollowing(models.Model):
     profile = models.ForeignKey(Profile, related_name="followings", on_delete=models.CASCADE)
     following = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-    def is_following(self, profile):
-        if self.profile == profile:
-            return True
-        return False
