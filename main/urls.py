@@ -4,6 +4,7 @@ from main import views
 app_name = 'main'
 
 urlpatterns = [
+    path('prova/<int:id>', views.prova, name='prova'),
     path('home/', views.ListTweets.as_view(), name='tweet_list'),
     path('feed/', views.Feed.as_view(), name='feed'),
     path('tweet/<pk>/', views.DetailTweetView.as_view(), name='detail_tweet'),
@@ -11,7 +12,7 @@ urlpatterns = [
     path('createtweet/', views.CreateTweetView.as_view(), name='create_tweet'),
     path('updatetweet/<pk>/', views.UpdateTweetView.as_view(), name='update_tweet'),
     path('deletetweet/<pk>/', views.DeleteTweetView.as_view(), name='delete_tweet'),
-    path('liketweet/<int:pk>/<str:page>', views.tweetLike, name="tweet_like"),
+    path('liketweet/<str:path>', views.tweetLike, name="tweet_like"),
     path('updateprofile/<pk>/', views.UpdateProfileView.as_view(), name='update_profile'),
     path('follow/<int:pk>', views.follow, name="follow"),
     path("searchProfile/", views.search_profile, name="search_profile"),

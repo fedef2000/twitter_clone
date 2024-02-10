@@ -51,12 +51,14 @@ def init_db():
     for i in range(5):
         try:
             user = create_user(username=profiles["name"][i], email=profiles["email"][i], password=profiles["password"][i])
-            profile = create_profile(user=user, name=profiles["name"][i])
-            n = random.randint(0,8)
-            create_tweet(profile, tweets["text"][n], tweets["category"][n], -5)
+            create_profile(user=user, name=profiles["name"][i])
         except Exception as e:
             print(e)
 
+    for i, profile in enumerate(Profile.objects.all()):
+        for j in range(i):
+            n = random.randint(0,8)
+            create_tweet(profile, tweets["text"][n], tweets["category"][n], -5)
 
     print("DUMP DB")
     print(Profile.objects.all())

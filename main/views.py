@@ -10,6 +10,11 @@ from main.forms import SearchTweetForm, SearchProfileForm
 from main.models import Tweet, Profile, UserFollowing
 
 
+def prova(request, id):
+    print(request.path_info)
+    print(request.get_full_path())
+    return render(request, '404_handler.html')
+
 # Create your views here.
 class ListTweets(ListView):
     model = Tweet
@@ -94,22 +99,14 @@ class DeleteTweetView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.success_url)
 
 
-def tweetLike(request, pk, page):
+def tweetLike(request, path):
     tweet = get_object_or_404(Tweet, id=request.POST.get('tweet_id'))
     profile = Profile.objects.get(user=request.user)
     if tweet.likedBy.filter(id=profile.id).exists():
         tweet.likedBy.remove(profile)
     else:
         tweet.likedBy.add(profile)
-
-    if page == "Profile":
-        return HttpResponseRedirect(reverse('main:detail_profile', args=[str(pk)]))
-    elif page == "Feed":
-        return HttpResponseRedirect(reverse('main:feed'))
-    elif page == "Tweet":
-        return HttpResponseRedirect(reverse('main:detail_tweet', args=[str(pk)]))
-    else:
-        return HttpResponseRedirect(reverse('main:tweet_list'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class ProfileDetailView(DetailView):

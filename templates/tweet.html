@@ -17,7 +17,7 @@
         {% endif %}
         <!-- LIKES -->
         {% if user.is_authenticated %}
-            <form action="{% url 'main:tweet_like' pk=pk page=page %}" method="POST">
+            <form action="{% url 'main:tweet_like' path=request.resolver_match.view_name %}" method="POST">
                 {% csrf_token %}
                 {% if tweet.post_is_liked %}
                     <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
