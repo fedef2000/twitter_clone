@@ -4,15 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="refactor messages dialog and update profile view">
+    <list default="true" id="c17059da-ae5c-4594-834a-8384a0020bc9" name="Changes" comment="fixed like view response">
+      <change afterPath="$PROJECT_DIR$/media/profile_photo/team_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profile_photo/team_1_xl7y0It.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/Classe_UML.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/DALLE_2023-12-27_15.20.36_-_che_guevara_playing_football_as_a_goalkeeper_EqjGNMy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/tweet_photo/herbstbaum-98afdef5-30d2-42cb-958d-a26be878075d.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/create_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/create_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/delete_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/delete_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/detail_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/detail_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/feed.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/feed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/list_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/list_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/search_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/search_profile_results.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_profile_results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/search_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_tweet.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/templates/main/search_tweet_results.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/search_tweet_results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/update_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/update_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/update_tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/update_tweet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/tweet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tweet.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/twitter_clone/initDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/initDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitter_clone/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitter_clone/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +151,10 @@
       <workItem from="1707404405868" duration="8875000" />
       <workItem from="1707489835868" duration="6157000" />
       <workItem from="1707511197446" duration="1941000" />
-      <workItem from="1707573501089" duration="1932000" />
+      <workItem from="1707573501089" duration="4688000" />
+      <workItem from="1707579288647" duration="3065000" />
+      <workItem from="1707673375720" duration="3688000" />
+      <workItem from="1707681783942" duration="4884000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -294,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707512733465</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fixed like view response">
+      <option name="closed" value="true" />
+      <created>1707575695231</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1707575695231</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,6 +363,7 @@
     <MESSAGE value="added alert message on CRUD tweet operations" />
     <MESSAGE value="added tweet category, search profile and search tweet" />
     <MESSAGE value="refactor messages dialog and update profile view" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor messages dialog and update profile view" />
+    <MESSAGE value="fixed like view response" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed like view response" />
   </component>
 </project>

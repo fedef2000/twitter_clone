@@ -8,7 +8,7 @@
     <ul>
         {% for profile in object_list %}
             <li>
-            <a href="{% url "main:detail_profile" pk=profile.user.id %}">
+            <a href="{% url "main:detail_profile" pk=profile.id %}">
                 <img src="{{ profile.photo.url }}" height=100 alt="">
                 <br>
                 {{ profile.name }}

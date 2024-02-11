@@ -1,6 +1,5 @@
 import datetime
 import random
-
 from main.models import *
 from django.contrib.auth.models import User
 
@@ -39,7 +38,7 @@ def init_db():
         "password": ["12345678", "12345678", "12345678", "12345678", "12345678"],
     }
     tweets = {
-        "text": ["Il mio sport preferito è il basket", "Alle prossime elezioni non andrò a votare", "Fellini è il miglior regista di sempre", "Ascoltate il nuovo album di Calcutta", "Domani partirò per la Thailandia", "Ho appena comprato il nuovo Iphone", "Oggi si guarda masterchef", "Al museo a guardare Monet", "Guardate che bella foto"],
+        "text": ["Il mio sport preferito è il basket", "Alle prossime elezioni andrò a votare", "Fellini è il miglior regista di sempre", "Ascoltate il nuovo album di Calcutta", "Domani partirò per la Thailandia", "Ho appena comprato il nuovo Iphone", "Oggi si guarda masterchef", "Al museo a guardare Monet", "Ultimo scatto"],
         "category": ["Sport", "Politica", "Cinema", "Musica", "Viaggi", "Tecnologia", "Cucina", "Arte", "Fotografia"]
 
     }
@@ -55,10 +54,13 @@ def init_db():
         except Exception as e:
             print(e)
 
-    for i, profile in enumerate(Profile.objects.all()):
-        for j in range(i):
-            n = random.randint(0,8)
-            create_tweet(profile, tweets["text"][n], tweets["category"][n], -5)
+    for i in range(9):
+        n = random.randint(0, 4)
+        profile = Profile.objects.all()[n]
+        if i == 8:
+            Tweet.objects.create(author=profile, text=tweets["text"][i], category=tweets["category"][i], photo="defaultTweet.jpg")
+        else:
+            create_tweet(profile, tweets["text"][i], tweets["category"][i], -5)
 
     print("DUMP DB")
     print(Profile.objects.all())

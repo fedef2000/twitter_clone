@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block title %} Modifica tweet {% endblock %}
 {% block content %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form | crispy}}
         <input type="submit" value="Salva Tweet">
     </form>
  {% endblock %}

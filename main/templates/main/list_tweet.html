@@ -3,12 +3,10 @@
 {% block title %} Lista tweet {% endblock %}
 
 {% block content %}
-    <h2>Ecco gli ultimi 20 tweet</h2>
-    <br>
     <ul>
     {% if tweets %}
         {% for tweet in tweets %}
-            <li>
+            <li style="list-style-type: none">
                 {% include "tweet.html" with page='Home' pk=0%}
             </li>
         {% endfor %}

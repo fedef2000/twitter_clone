@@ -1,45 +1,51 @@
+<a href="{% url "main:detail_tweet" pk=tweet.id %}" >
+<div style="border: 1px solid black; width: 600px; padding: 30px; margin-bottom: 10px">
+
 <div class="panel-body">
-    <a href="{% url "main:detail_profile" pk=tweet.author.user.id %}">
-        <img class="img-circle img-bordered-primary" src="{{ tweet.author.photo.url }}" alt="" width="65px" height="65px">
+    <a href="{% url "main:detail_profile" pk=tweet.author.id %}">
+        <img style="border-radius: 115px" class="img-bordered-primary" src="{{ tweet.author.photo.url }}" alt="" width="65px" height="65px">
     </a>
-    <h5 class="semibold ellipsis nm"><a href="{% url "main:detail_profile" pk=tweet.author.user.id %}">{{ tweet.author.name }}</a></h5>
+    <h5 class="semibold ellipsis nm"><a href="{% url "main:detail_profile" pk=tweet.author.id %}">{{ tweet.author.name }}</a></h5>
     <small class="text-muted">{{ tweet.date.astimezone }}</small>
 </div>
 
 
 <div>
-    <a href="{% url "main:detail_tweet" pk=tweet.id %}" >
-        {{ tweet.text }}
+        <p style="color: black; margin-bottom: 0; margin-top: 10px; font-family: Arial,serif; font-size: 20px">{{ tweet.text }}</p>
         <br>
         {% if tweet.photo %}
-            <img src=" {{ tweet.photo.url }}" height=100>
+            <img src=" {{ tweet.photo.url }}" width="500" style="margin-bottom: 20px" alt="">
             <br>
         {% endif %}
         <!-- LIKES -->
         {% if user.is_authenticated %}
-            <form action="{% url 'main:tweet_like' path=request.resolver_match.view_name %}" method="POST">
+            <div >
+            <form style="margin-bottom: 10px" action="{% url 'main:tweet_like' %}" method="POST">
                 {% csrf_token %}
                 {% if tweet.post_is_liked %}
-                    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
+                    <button style="background-color: #ff5d49" type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Unlike</button>
                 {% else %}
-                    <button type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>
+                    <button style="background-color: #ff5d49" type="submit" name="tweet_id" value="{{tweet.id}}" class="btn btn-info">Like</button>
                 {% endif %}
             </form>
             {% if user == tweet.author.user %}
-                <form action="{% url 'main:update_tweet' pk=tweet.id %}" method="POST">
+                <form style="margin-bottom: 10px" action="{% url 'main:update_tweet' pk=tweet.id %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-info">Modifica tweet</button>
+                    <button type="submit" class="btn btn-info" style="background-color: #ffdb3f; color: black">Modifica tweet</button>
                 </form>
-                <form action="{% url 'main:delete_tweet' pk=tweet.id %}" method="GET">
+                <form style="margin-bottom: 10px" action="{% url 'main:delete_tweet' pk=tweet.id %}" method="GET">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-info">Elimina tweet</button>
+                    <button type="submit" class="btn btn-info" style="background-color: #ffdb3f; color: black">Elimina tweet</button>
                 </form>
-            {% endif %} 
+            {% endif %}
+            </div>
         {% else %}
             <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Fai il login per mettere like</a><br>
         {% endif %}
         <strong class="text-secondary">{{ tweet.likedBy.count }} Like{{ tweet.likedBy.count|pluralize }}</strong>
         <br>
-        <br>
-    </a>
+    <p> Categoria: <a href="{% url "main:search_tweet_results" category=tweet.category text=" " %}"> {{ tweet.category }} </a></p>
+    <br>
 </div>
+</div>
+</a>

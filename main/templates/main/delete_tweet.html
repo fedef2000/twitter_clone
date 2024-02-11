@@ -5,13 +5,33 @@
 <form method="post">{% csrf_token %}
     <h3>Sicuro di voler cancellare questo tweet?</h3>
     <br>
-    {{ tweet.text }}
-    <br>
-    {% if tweet.photo %}
-        <img src=" {{ tweet.photo.url }}" height=100>
+
+    <div class="panel-body">
+    <a href="{% url "main:detail_profile" pk=tweet.author.id %}">
+        <img style="border-radius: 115px" class="img-bordered-primary" src="{{ tweet.author.photo.url }}" alt="" width="65px" height="65px">
+    </a>
+    <h5 class="semibold ellipsis nm"><a href="{% url "main:detail_profile" pk=tweet.author.id %}">{{ tweet.author.name }}</a></h5>
+    <small class="text-muted">{{ tweet.date.astimezone }}</small>
+</div>
+
+
+<div>
+    <a href="{% url "main:detail_tweet" pk=tweet.id %}" >
+        <p style="color: black">{{ tweet.text }}</p>
         <br>
-    {% endif %}
-    <input type="submit" value="Conferma">
+        {% if tweet.photo %}
+            <img src=" {{ tweet.photo.url }}" height=250 style="padding: 30px" alt="">
+            <br>
+        {% endif %}
+        <strong class="text-secondary">{{ tweet.likedBy.count }} Like{{ tweet.likedBy.count|pluralize }}</strong>
+        <br>
+    </a>
+    <p> Categoria: <a href="{% url "main:search_tweet_results" category=tweet.category text=" " %}"> {{ tweet.category }} </a></p>
+    <br>
+</div>
+
+
+    <input style="height: 70px;width: 120px; background-color: red" type="submit" value="Conferma">
     <br>
 </form>
 

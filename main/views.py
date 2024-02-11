@@ -10,12 +10,10 @@ from main.forms import SearchTweetForm, SearchProfileForm
 from main.models import Tweet, Profile, UserFollowing
 
 
-def prova(request, id):
-    print(request.path_info)
-    print(request.get_full_path())
-    return render(request, '404_handler.html')
-
 # Create your views here.
+
+# Tweets view
+
 class ListTweets(ListView):
     model = Tweet
     template_name = "main/list_tweet.html"
@@ -99,39 +97,55 @@ class DeleteTweetView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.success_url)
 
 
-def tweetLike(request, path):
-    tweet = get_object_or_404(Tweet, id=request.POST.get('tweet_id'))
-    profile = Profile.objects.get(user=request.user)
-    if tweet.likedBy.filter(id=profile.id).exists():
-        tweet.likedBy.remove(profile)
-    else:
-        tweet.likedBy.add(profile)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
+# Profile views
 
 class ProfileDetailView(DetailView):
-    model = User
+    model = Profile
     template_name = "main/detail_profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = context["object"].pk
-        profile = Profile.objects.get(user=User.objects.get(id=pk))
+        profile = Profile.objects.get(id=pk)
         tweets = Tweet.objects.filter(author=profile).order_by("-date")
         if self.request.user.is_authenticated:
             user = User.objects.get(id=self.request.user.id)
-            p = Profile.objects.get(user=user)
+            user_profile = Profile.objects.get(user=user)
             for tweet in tweets:
-                tweet.post_is_liked = tweet.likedBy.filter(id=p.id).exists()
-            if UserFollowing.objects.filter(profile=p, following=profile).exists():
+                tweet.post_is_liked = tweet.likedBy.filter(id=user_profile.id).exists()
+            if UserFollowing.objects.filter(profile=user_profile, following=profile).exists():
                 context["is_following"] = True
             else:
                 context["is_following"] = False
-        context["user"] = self.request.user  # senza questa linea lo user nel template veniva impostato come quello di cui si stava visionando il profilo
         context["profile"] = profile
         context['tweets'] = tweets
         return context
 
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    template_name = "main/update_profile.html"
+    fields = ["name", "photo", "bio"]
+
+    def get_success_url(self):
+        profile = Profile.objects.get(user=self.request.user)
+        return reverse("main:detail_profile", kwargs={'pk': profile.id})
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        if not profile.photo:
+            profile.photo = "defaultProfileImage.jpg"
+        profile.save()
+        messages.success(self.request, 'Profilo aggiornato con successo')
+        return HttpResponseRedirect(self.get_success_url())
+
+
+def myProfile(request):
+    profile = Profile.objects.get(user=request.user)
+    return HttpResponseRedirect(reverse("main:detail_profile", kwargs={'pk': profile.id}))
+
+
+# other function view
 
 def search_profile(request):
     if request.method == "POST":
@@ -161,13 +175,13 @@ def search_tweet(request):
             text = form.cleaned_data.get("text")
             if text == "":
                 text = " "
-            return redirect("main:search_tweet_results",  category=category, text=text)
+            return redirect("main:search_tweet_results", category=category, text=text)
     else:
         form = SearchTweetForm()
     return render(request, template_name="main/search_tweet.html", context={"form": form})
 
 
-class SearchTweetView(ListView):
+class SearchTweetResultsView(ListView):
     model = Tweet
     template_name = "main/search_tweet_results.html"
 
@@ -191,23 +205,6 @@ class SearchTweetView(ListView):
         return context
 
 
-class UpdateProfileView(LoginRequiredMixin, UpdateView):
-    model = Profile
-    template_name = "main/update_profile.html"
-    fields = ["name", "photo", "bio"]
-
-    def get_success_url(self):
-        return reverse("main:detail_profile", kwargs={'pk': self.request.user.id})
-
-    def form_valid(self, form):
-        profile = form.save(commit=False)
-        if not profile.photo:
-            profile.photo = "defaultProfileImage.jpg"
-        profile.save()
-        messages.success(self.request, 'Profilo aggiornato con successo')
-        return HttpResponseRedirect(self.get_success_url())
-
-
 def follow(request, pk):
     profile = Profile.objects.get(user=request.user)
     following = get_object_or_404(Profile, id=request.POST.get('profile_id'))
@@ -217,3 +214,14 @@ def follow(request, pk):
         UserFollowing.objects.create(profile=profile, following=following)
 
     return HttpResponseRedirect(reverse('main:detail_profile', args=[str(pk)]))
+
+
+def tweetLike(request):
+    tweet = get_object_or_404(Tweet, id=request.POST.get('tweet_id'))
+    profile = Profile.objects.get(user=request.user)
+    if tweet.likedBy.filter(id=profile.id).exists():
+        tweet.likedBy.remove(profile)
+    else:
+        tweet.likedBy.add(profile)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+

@@ -7,7 +7,7 @@
 {% if object_list %}
     <ul>
         {% for tweet in object_list %}
-            <li>
+            <li style="list-style-type: none">
                 {% include 'tweet.html' with page='Tweet' pk=tweet.id %}
             </li>
         {% endfor %}

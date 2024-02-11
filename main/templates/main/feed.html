@@ -10,8 +10,8 @@
         <br>
         <ul>
             {% for tweet in tweets %}
-                <li>
-                    {% include "tweet.html" with page='Feed' pk=0%}
+                <li style="list-style-type: none">
+                    {% include "tweet.html" %}
                 </li>
             {% endfor %}
         </ul>
